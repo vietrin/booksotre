@@ -1,0 +1,54 @@
+@model Dictionary<Book, int>
+ <span hidden> @(ViewBag.total=0) </span>
+    <div class="cart-block">
+        <div class="cart-total">
+            <span class="text-number">
+                @Model.LongCount()
+            </span>
+            <span class="text-item">
+                Shopping Cart
+            </span>
+            <span class="price">
+                @foreach(KeyValuePair<Book, int> kv in Model as Dictionary<Book ,int>){
+                   
+                    <span hidden> @(ViewBag.total = ViewBag.total + (kv.Value * kv.Key.Price))  </span> 
+                    
+                }
+                 <span> @ViewBag.total$</span>
+                <i class="fas fa-chevron-down"></i>
+            </span>
+        </div>
+        <div class="cart-dropdown-block">
+            @foreach(
+            KeyValuePair<Book, int> kv in Model as Dictionary<Book ,int>
+                    ){ <div  class="single-cart-block ">
+                        <div class="cart-product">
+                            <a href="product-details.html" class="image">
+                                <img src="~/image/products/cart-product-1.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h3 class="title">
+                                    <a href="product-details.html">
+                                        @kv.Key.Title
+                                    </a>
+                                </h3>
+                                <p class="price"><span class="qty">@kv.Value X</span> $@kv.Key.Price</p>
+                                <a href="@Url.Action("RemoveProduct", new {kv.Key.Id})">
+                                    <button class="cross-btn"><i class="fas fa-times">
+
+                                        </i></button>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    <div class=" single-cart-block ">
+                        <div class="btn-block">
+                            <a href="/Cart" class="btn">View Cart <i class="fas fa-chevron-right"></i></a>
+                            <a href="checkout.html" class="btn btn--primary">Check Out <i
+                                    class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+        </div>
+    </div>
